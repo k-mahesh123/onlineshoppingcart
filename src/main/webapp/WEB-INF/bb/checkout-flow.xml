@@ -1,0 +1,33 @@
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+   
+   <var name="usersignup" class="com.niit.shopinngcart1.model.UserSignUP"/>	  
+	    
+	    
+    <view-state id="collectCustomerInfo" view="collectCustomerInfo.jsp" model="usersignup">
+        <transition on="customerInfoCollected" to="collectShippingDetail" />
+    </view-state>
+
+    <view-state id="collectShippingDetail" view="collectShippingDetail.jsp" model="BillingAddress">
+        <transition on="shippingDetailCollected" to="orderConfirmation" />
+        <transition on="backToCollectCustomerInfo" to="collectCustomerInfo" />
+    </view-state>
+
+    <view-state id="orderConfirmation">
+        <transition on="orderConfirmed" to="processOrder" />
+        <transition on="backToCollectShippingDetail" to="collectShippingDetail" />
+    </view-state>
+
+    <action-state id="processOrder">
+                <transition to="thankCustomer" />
+    </action-state>
+
+    <view-state id="thankCustomer" model="CustomerOrder">
+        <transition to="endState" />
+    </view-state>
+
+    <end-state id="endState" />
+
+
+</flow>
